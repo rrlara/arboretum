@@ -1,41 +1,37 @@
 <template>
   <div class="hello">
-    <form id="main" v-cloak>
-
-      <div class="bar">
-
-        <!-- These two buttons switch the layout variable,
-           which causes the correct UL to be shown. -->
-
-        <a class="list-icon" v-bind:class="{ 'active': layout == 'list'}" v-on:click="layout = 'list'"></a>
-        <a class="grid-icon" v-bind:class="{ 'active': layout == 'grid'}" v-on:click="layout = 'grid'"></a>
-      </div>
-
-      <!-- We have two layouts. We choose which one to show depending on the "layout" binding -->
-
-      <ul v-if="layout == 'grid'" class="grid">
-        <!-- A view with big photos and no text -->
-        <li v-for="a in articles">
-          <a v-bind:href="a.url" target="_blank"><img v-bind:src="a.image.large" /></a>
-        </li>
-      </ul>
-
-      <ul v-if="layout == 'list'" class="list">
-        <!-- A compact view smaller photos and titles -->
-        <li v-for="a in articles">
-          <a v-bind:href="a.url" target="_blank"><img v-bind:src="a.image.small" /></a>
-          <p>{{a.title}}</p>
-        </li>
-      </ul>
-
-    </form>
+  <group>
+    <switch title="Default popup" :value.sync="show"></switch>
+    <switch title="Full popup" :value.sync="show1"></switch>
+  </group>
+  <popup :show.sync="show">
+    <div class="popup0">
+      <group>
+        <switch title="Another Switcher" :value.sync="show"></switch>
+      </group>
+    </div>
+  </popup>
+    <popup :show.sync="show1" height="100%">
+    <div class="popup1">
+      <group>
+        <switch title="Another Switcher" :value.sync="show1"></switch>
+      </group>
+    </div>
+  </popup>
   </div>
 
 </template>
 
 <script>
+import { Popup, Group, Switch } from 'vux'
+
 export default {
   name: 'Hello',
+  components: {
+    Popup,
+    Group,
+    Switch
+  },
   data () {
     return {
       // note: changing this line won't causes changes
@@ -45,22 +41,8 @@ export default {
       msg: 'Hello World!',
       // The layout mode, possible values are "grid" or "list".
       layout: 'grid',
-      articles: [{
-        title: 'What You Need To Know About CSS Variables',
-        url: 'http://tutorialzine.com/2016/03/what-you-need-to-know-about-css-variables/',
-        image: {
-          large: 'http://cdn.tutorialzine.com/wp-content/uploads/2016/03/css-variables.jpg',
-          small: 'http://cdn.tutorialzine.com/wp-content/uploads/2016/03/css-variables-150x150.jpg'
-        }
-      },
-      {
-        title: 'What You Need To Know About CSS Variables',
-        url: 'http://tutorialzine.com/2016/03/what-you-need-to-know-about-css-variables/',
-        image: {
-          large: 'http://cdn.tutorialzine.com/wp-content/uploads/2016/03/css-variables.jpg',
-          small: 'http://cdn.tutorialzine.com/wp-content/uploads/2016/03/css-variables-150x150.jpg'
-        }
-      }]
+      show: false,
+      show1: false
     }
   }
 }
@@ -78,6 +60,15 @@ until the Vue instance is ready */
 *{
   margin:0;
   padding:0;
+}
+
+.popup0 {
+  padding-bottom:15px;
+  height:200px;
+}
+.popup1 {
+  width:100%;
+  height:100%;
 }
 
 body{
