@@ -1,6 +1,17 @@
 <template>
   <div>
     <img class="logo" src="./assets/logo.png">
+    <div class="rightMenu">
+            <ul class="nav navbar-nav">
+            <li><a v-link="{ path: '/hello'}" class="addNewLayer">hello</a></li>
+            <li class="seperatorRight" ></li>
+            <li><a v-link="{ path: '/home'}">home</a></li>
+            <li class="seperatorRight" ></li>
+            <li><a v-link="{ path: '/orale'}">orale</a></li>
+            <li class="seperatorRight" ></li>
+            <li><a v-link="{ path: '/swiper'}">swiper</a></li>
+            </ul>
+          </div>
     <!-- use router-view element as route outlet -->
       <router-view></router-view>
     <!-- <hello></hello> -->

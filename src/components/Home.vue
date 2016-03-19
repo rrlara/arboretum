@@ -1,44 +1,63 @@
 <template>
-  <div style="">
-    <blur :blur-amount=40 :url="url">
-      <p class="center"><img :src="url"></p>
-    </blur>
-    <flexbox :margin-left=0>
-      <flexbox-item v-for="img in images"><img :src="img" style="width:100%" @click="url = img"/></flexbox-item>
-    </flexbox>
+  <div class="vux-circle-demo">
+    <br>
+    <div style='width:100px;height:100px;'>
+      <circle :percent="percent1" :stroke-width=10 stroke-color=#04BE02>
+        <span>{{percent1}}</span>
+      </circle>
+    </div>
+    <br>
+    <div style="width:180px;">
+      <range :value.sync="percent1" :min=0 :max=100></range>
+    </div>
+    <br>
+    <div style='width:100px;height:100px;'>
+      <circle :percent=100 :stroke-width=3 stroke-color=#04BE02>
+        <icon type="success"></icon>
+      </circle>
+    </div>
+    <br>
+    <div style='width:100px;height:100px;'>
+      <circle :percent='percent2' :stroke-width=6 :trail-width=6 :stroke-color='strokeColor2' trail-color="#ececec">
+        <span :style="{color: strokeColor2}">{{percent2}}%</span>
+      </circle>
+    </div>
   </div>
 </template>
 
 <script>
-import { Flexbox, FlexboxItem, Blur } from 'vux'
+import { Circle, Range, Icon } from 'vux'
 export default {
+  ready () {
+    setInterval(this.update2, 2000)
+  },
   components: {
-    Blur,
-    Flexbox,
-    FlexboxItem
+    Circle,
+    Range,
+    Icon
   },
   data () {
     return {
-      images: ['https://o3e85j0cv.qnssl.com/tulips-1083572__340.jpg',
-              'https://o3e85j0cv.qnssl.com/waterway-107810__340.jpg',
-              'https://o3e85j0cv.qnssl.com/hot-chocolate-1068703__340.jpg'],
-      url: 'https://o3e85j0cv.qnssl.com/tulips-1083572__340.jpg'
+      percent1: 10,
+      percent2: 30,
+      strokeColor2: '#3FC7FA'
+    }
+  },
+  methods: {
+    update2: function () {
+      const colorMap = ['#3FC7FA', '#85D262', '#FE8C6A']
+      this.percent2 = parseInt(Math.random() * 100, 10)
+      this.strokeColor2 = colorMap[parseInt(Math.random() * 3, 10)]
     }
   }
 }
 </script>
 
 <style scoped>
-.center {
+.vux-circle-demo {
   text-align: center;
-  padding-top: 20px;
-  color: #fff;
-  font-size: 18px;
 }
-.center img {
-  width: 100px;
-  height: 100px;
-  border-radius: 50%;
-  border: 4px solid #ececec;
+.vux-circle-demo > div {
+  margin: 0 auto;
 }
 </style>

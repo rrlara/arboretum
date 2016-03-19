@@ -3,7 +3,11 @@
   <group>
     <switch title="Default popup" :value.sync="show"></switch>
     <switch title="Full popup" :value.sync="show1"></switch>
+    <switch title="Show cancel menu" :value.sync="showAction"></switch>
   </group>
+
+  <actionsheet :show.sync="showAction" :menus="menusAction" @menu-click="click" show-cancel></actionsheet>
+
   <popup :show.sync="show">
     <div class="popup0">
       <group>
@@ -20,17 +24,29 @@
   </popup>
   </div>
 
+  <aside :show.sync="showLeft" placement="left" header="Title" :width="300">
+
+  </aside>
+
+  <button
+    class="btn btn-danger btn-lg"
+    @click="showLeft = true">Show Aside on left
+  </button>
+
 </template>
 
 <script>
-import { Popup, Group, Switch } from 'vux'
+import { Popup, Group, Switch, Actionsheet } from 'vux'
+import { aside } from 'vue-strap'
 
 export default {
   name: 'Hello',
   components: {
     Popup,
     Group,
-    Switch
+    Switch,
+    aside,
+    Actionsheet
   },
   data () {
     return {
@@ -42,7 +58,13 @@ export default {
       // The layout mode, possible values are "grid" or "list".
       layout: 'grid',
       show: false,
-      show1: false
+      show1: false,
+      showLeft: false,
+      showAction: false,
+      menusAction: {
+        menu1: 'Take Photo',
+        menu2: 'Choose from photos'
+      }
     }
   }
 }
